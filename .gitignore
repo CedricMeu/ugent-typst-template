@@ -1,0 +1,4 @@
+.envrc
+*.pdf
+termpdf.log
+flake.lock

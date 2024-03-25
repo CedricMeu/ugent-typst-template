@@ -1,0 +1,3 @@
+= Method
+
+#lorem(100)
