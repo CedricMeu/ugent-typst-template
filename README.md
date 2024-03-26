@@ -7,7 +7,7 @@ These RQs are maintained under `src/rqs.typ`.
 
 ## Other libraries
 
-The library (acrostiche)[https://typst.app/universe/package/acrostiche] is used to manage acronyms.
+The library [acrostiche](https://typst.app/universe/package/acrostiche) is used to manage acronyms.
 These are maintained under `src/acronyms.typ`.
 
 ## Other remarks
@@ -20,6 +20,6 @@ A nix flake is supplied that will install _typst_ and _just_.
 
 ## Justfile
 
-`j watch` to watch the files.
-`j biuld` to only build once.
-Default (`j`) is `j watch`.
+`just watch` to watch the files.
+`just build` to only build once.
+Default (`just`) is `just watch`.
