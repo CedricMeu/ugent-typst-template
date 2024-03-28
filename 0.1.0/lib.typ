@@ -1,9 +1,11 @@
-#import "@preview/acrostiche:0.3.1": init-acronyms
+#import "@preview/acrostiche:0.3.1": init-acronyms, print-index
 #import "lib/research-questions.typ": init-rqs
 
 // workaround for lack of std scope
 #let std-biblio = bibliography
 
+// store in states such that these need to be passed
+// only once, in the `thesis` function
 #let _authors = state("authors", ())
 #let _title = state("title", [])
 #let _supervisors = state("supervisors", ())
@@ -40,7 +42,6 @@
     header: context {
       let elems = query(
         selector(heading).before(here()))
-      
 
       let headings_at_this_page = query(
         heading.where(level: 1)
@@ -61,40 +62,39 @@
   show heading.where(
     level: 1
   ): it => {
-    set text(size: 30pt)
-    it
+    text(size: 30pt, it)
     v(1.5em)
   }
   
   show heading.where(
     level: 2
   ): it => {
-    set text(size: 26pt)
-    it
+    text(size: 26pt, it)
     v(1em)
   }
   
   show heading.where(
     level: 3
   ): it => {
-    set text(size: 20pt)
-    it
+    text(size: 20pt, it)
     v(.75em)
   }
   
   set text(font: "UGent Panno Text", size: 12pt)
   
+  // make new sections appear on the right hand side
   set pagebreak(weak: true, to: "odd")
 
   body
 
   if bibliography != none {
+    pagebreak()
     set std-biblio(style: "ieee", title: [References])
     bibliography
   }
 }
 
-#let page-content() = {
+#let page-content(body) = {
   // from here, add a new page before each level one heading
   show heading.where(
     level: 1
@@ -102,6 +102,8 @@
     pagebreak()
     it
   }
+
+  body
 }
 
 #let acronyms(
@@ -111,6 +113,10 @@
   )
 ) = {
   init-acronyms(acros)
+}
+
+#let show-acronyms() = {
+  print-index()
 }
 
 #let rqs(
@@ -123,7 +129,9 @@
   faculty-img: none,
   ugent-logo: none,
 ) = {
-  image(faculty-img, height: 3em)
+  if faculty-img != none and type(faculty-img) == content {
+    faculty-img
+  }
   
   // contextually get title and author etc.
   context {
@@ -131,7 +139,7 @@
      #text(size: 24pt)[#_title.get()]
     ]
   
-    align(bottom)[
+    align(bottom + center)[
      #table(
       columns: (auto, auto),
       stroke: none,
@@ -139,11 +147,13 @@
       [_Supervisors_], [#_supervisors.get().join(", ")],
      )
     
-     #align(center)[Academic year #_year.get()]
+     Academic year #_year.get()
     ]
   }
   
-  pad(top: 8em, image(ugent-logo, height: 5em))
+  if ugent-logo != none and type(ugent-logo) == content {
+    pad(top: 8em, ugent-logo)
+  }
   
   pagebreak()
 }

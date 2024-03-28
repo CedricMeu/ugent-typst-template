@@ -1,16 +1,16 @@
-#import "@local/ugent-thesis:0.1.0": thesis, acronyms, front-page, page-content
+#import "lib.typ": thesis, acronyms, front-page, page-content, show-acronyms
 
 #show: thesis.with(
   title: [A UGent Master's Dissertation Created Using Typst],
   authors: ("John Doe",),
   supervisors: ("Prof. Dr. Jane Doe",),
   year: "2023-2024",
-  bibliography: bibliography("bib.bib")
+  bibliography: bibliography("template/bib.bib")
 )
 
 #front-page(
-  faculty-img: image("images/ea.png"),
-  ugent-logo: image("images/ugent.png"),
+  faculty-img: "template/images/ea.png",
+  ugent-logo: "template/images/ugent.png",
 )
 
 #acronyms(
@@ -20,6 +20,8 @@
   )
 )
 
+#show-acronyms()
+
 #show: page-content
 // start the actual thesis contents here!
 
@@ -27,3 +29,4 @@
 #lorem(200) 
 
 = Next Sections... 
+#lorem(2000)
