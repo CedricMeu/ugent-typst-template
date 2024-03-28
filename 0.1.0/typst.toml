@@ -1,0 +1,13 @@
+[package]
+name = "ugent-typst-template"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Cedric Meukens"]
+license = "GPL-3.0"
+description = "A template for a UGent dissertation."
+categories = ["thesis", "paper"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"
