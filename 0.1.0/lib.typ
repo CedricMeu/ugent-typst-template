@@ -7,34 +7,41 @@
 
 // store in states such that these need to be passed
 // only once, in the `thesis` function
-#let _authors = state("authors", ())
-#let _title = state("title", [])
-#let _supervisors = state("supervisors", ())
+#let _authors = state("authors", none)
+#let _title = state("title", none)
+#let _supervisors = state("supervisors", none)
 #let _year = state("year", [#current-academic-year()])
 
 #let thesis(
-  // The title of this thesis
-  title: [The title of the thesis],
+  // The title of this thesis [content]
+  title: none,
   // the authors of this thesis
-  authors: ("John Doe",),
+  authors: none,
   // The supervisors for this thesis
-  supervisors: ("Prof. Dr. Jane Doe",),
+  supervisors: none,
   // the academic year
-  year: [2023-2024],
+  year: none,
   // a `#bibliography(...)` or `none`
   bibliography: none,
   // the actual content of the thesis
   body
 ) = {
+  // title, authors are required (return clear error message if not given)
+  assert.ne(title, none, message: "`title` is a required argument")
+  assert.ne(authors, none, message: "`authors` is a required argument")
+
   set document(
     title: title, 
     author: authors,
   )
+
   // set states to the given parameters
   _authors.update(authors)
   _title.update(title)
   _supervisors.update(supervisors)
-  _year.update(year)
+  if year != none {
+    _year.update(year)
+  }
 
 
   set page(
@@ -139,13 +146,21 @@
     align(center + horizon)[
      #text(size: 24pt)[#_title.get()]
     ]
+
+    let table-content = ()
+    table-content.push([_Author_])
+    table-content.push([#_authors.get().join(", ")])
+
+    if _supervisors.get() != none {
+      table-content.push([_Supervisors_])
+      table-content.push([#_supervisors.get().join(", ")])
+    }
   
     align(bottom + center)[
      #table(
       columns: (auto, auto),
       stroke: none,
-      [_Author_], [#_authors.get().join(", ")],
-      [_Supervisors_], [#_supervisors.get().join(", ")],
+      ..table-content
      )
     
      Academic year #_year.get()
