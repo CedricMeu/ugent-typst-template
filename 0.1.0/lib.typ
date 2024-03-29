@@ -1,5 +1,6 @@
 #import "@preview/acrostiche:0.3.1": init-acronyms, print-index
 #import "lib/research-questions.typ": init-rqs
+#import "lib/utils.typ": current-academic-year
 
 // workaround for lack of std scope
 #let std-biblio = bibliography
@@ -9,7 +10,7 @@
 #let _authors = state("authors", ())
 #let _title = state("title", [])
 #let _supervisors = state("supervisors", ())
-#let _year = state("year", [2023-2024])
+#let _year = state("year", [#current-academic-year()])
 
 #let thesis(
   // The title of this thesis
