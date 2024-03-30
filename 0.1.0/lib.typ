@@ -2,9 +2,6 @@
 #import "lib/research-questions.typ": init-rqs
 #import "lib/utils.typ": current-academic-year
 
-// workaround for lack of std scope
-#let std-biblio = bibliography
-
 // store in states such that these need to be passed
 // only once, in the `thesis` function
 #let _authors = state("authors", none)
