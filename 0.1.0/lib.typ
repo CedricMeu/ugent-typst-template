@@ -43,7 +43,6 @@
     _year.update(year)
   }
 
-
   set page(
     paper: "a4",
     margin: 2cm,
@@ -111,6 +110,9 @@
     it
   }
 
+  counter(page).update(1)
+  set page(numbering: "1")
+
   body
 }
 
@@ -131,45 +133,4 @@
   questions: ("RQ1": "What is the impact of X on Y?",)
 ) = {
   init-rqs(questions)
-}
-
-#let front-page(
-  faculty-img: none,
-  ugent-logo: none,
-) = {
-  if faculty-img != none and type(faculty-img) == content {
-    faculty-img
-  }
-  
-  // contextually get title and author etc.
-  context {
-    align(center + horizon)[
-     #text(size: 24pt)[#_title.get()]
-    ]
-
-    let table-content = ()
-    table-content.push([_Author_])
-    table-content.push([#_authors.get().join(", ")])
-
-    if _supervisors.get() != none {
-      table-content.push([_Supervisors_])
-      table-content.push([#_supervisors.get().join(", ")])
-    }
-  
-    align(bottom + center)[
-     #table(
-      columns: (auto, auto),
-      stroke: none,
-      ..table-content
-     )
-    
-     Academic year #_year.get()
-    ]
-  }
-  
-  if ugent-logo != none and type(ugent-logo) == content {
-    pad(top: 8em, ugent-logo)
-  }
-  
-  pagebreak()
 }
