@@ -21,8 +21,6 @@
   supervisors: none,
   // the academic year
   year: none,
-  // a `#bibliography(...)` or `none`
-  bibliography: none,
   // the actual content of the thesis
   body
 ) = {
@@ -93,12 +91,6 @@
   set pagebreak(weak: true, to: "odd")
 
   body
-
-  if bibliography != none {
-    pagebreak()
-    set std-biblio(style: "ieee", title: [References])
-    bibliography
-  }
 }
 
 #let page-content(body) = {
