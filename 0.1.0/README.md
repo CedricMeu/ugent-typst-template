@@ -17,10 +17,5 @@ typst watch main.typ --font-path fonts
 - The library [acrostiche](https://typst.app/universe/package/acrostiche) is used to manage acronyms.
     These are maintained under `src/acronyms.typ`.
 
-## Other remarks
-
-The `front-page` function is really only a placeholder for the eventual front page which you will have to export
-from Plato yourself.
-
 ## License
 This template is licensed under the GPL-3.0 license. See the LICENSE file for more information.
