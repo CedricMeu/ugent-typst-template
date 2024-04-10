@@ -1,26 +1,20 @@
-#import "lib.typ": thesis, acronyms, front-page, page-content, show-acronyms
+#import "lib.typ": thesis, page-content
+#import "@preview/acrostiche:0.3.1": *
 
 #show: thesis.with(
   title: [A UGent Master's Dissertation Created Using Typst],
   authors: ("John Doe",),
   supervisors: ("Prof. Dr. Jane Doe",),
   year: "2023-2024",
-  bibliography: bibliography("template/bib.bib")
 )
 
-#front-page(
-  faculty-img: "template/images/ea.png",
-  ugent-logo: "template/images/ugent.png",
-)
+#outline()
+#init-acronyms((
+  "ML": "Machine Learning",
+  "AI": "Artificial Intelligence",
+))
 
-#acronyms(
-  acros: (
-    "ML": "Machine Learning",
-    "AI": "Artificial Intelligence",
-  )
-)
-
-#show-acronyms()
+#print-index()
 
 #show: page-content
 // start the actual thesis contents here!

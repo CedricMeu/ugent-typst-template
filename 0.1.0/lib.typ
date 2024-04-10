@@ -1,5 +1,3 @@
-#import "@preview/acrostiche:0.3.1": init-acronyms, print-index
-#import "lib/research-questions.typ": init-rqs
 #import "lib/utils.typ": current-academic-year
 
 // store in states such that these need to be passed
@@ -41,25 +39,10 @@
   set page(
     paper: "a4",
     margin: 2cm,
-    header: context {
-      let elems = query(
-        selector(heading).before(here()))
-
-      let headings_at_this_page = query(
-        heading.where(level: 1)
-      ).find(h => h.location().page() == here().page())
-
-      let page_has_no_heading = headings_at_this_page == none 
-
-      if elems.len() != 0 and page_has_no_heading {
-        let body = elems.last().body
-        align(right, emph(body))
-      }
-    },
     numbering: "I"
   )
   
-  set heading(numbering: "1.", supplement: [Chapter])
+  set heading(numbering: none)
   
   show heading.where(
     level: 1
@@ -84,14 +67,10 @@
   
   set text(font: "UGent Panno Text", size: 12pt)
   
-  // make new sections appear on the right hand side
+  // make new sections appear on the right-hand side
   set pagebreak(weak: true, to: "odd")
 
-  body
-}
-
-#let page-content(body) = {
-  // from here, add a new page before each level one heading
+  // add a new page before each level one heading
   show heading.where(
     level: 1
   ): it => {
@@ -99,27 +78,35 @@
     it
   }
 
-  counter(page).update(1)
-  set page(numbering: "1")
-
   body
 }
 
-#let acronyms(
-  acros: (
-    "ML": "Machine Learning",
-    "AI": "Artificial Intelligence",
+#let page-content(body) = {
+  // Reset header counts and add numbering
+  counter(heading).update(0)
+  set heading(numbering: "1.", supplement: [Chapter])
+
+  // Reset page counts, set to '1' numbering, and add
+  // chapter title to header where no chapter is displayed
+  counter(page).update(1)
+  set page(
+    numbering: "1",
+    header: context {
+      let elems = query(
+        selector(heading).before(here()))
+
+      let headings_at_this_page = query(
+        heading.where(level: 1)
+      ).find(h => h.location().page() == here().page())
+
+      let page_has_no_heading = headings_at_this_page == none 
+
+      if elems.len() != 0 and page_has_no_heading {
+        let body = elems.last().body
+        align(right, emph(body))
+      }
+    },
   )
-) = {
-  init-acronyms(acros)
-}
 
-#let show-acronyms() = {
-  print-index()
-}
-
-#let rqs(
-  questions: ("RQ1": "What is the impact of X on Y?",)
-) = {
-  init-rqs(questions)
+  body
 }
