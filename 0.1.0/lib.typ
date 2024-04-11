@@ -49,18 +49,25 @@
     },
   )
   
-  
+  show heading.where(
+    level: 1
+  ): it => {
+    pagebreak()
+    text(size: 26pt, it)
+    v(1.25em)
+  }
+
   show heading.where(
     level: 2
   ): it => {
-    text(size: 26pt, it)
+    text(size: 22pt, it)
     v(1em)
   }
   
   show heading.where(
     level: 3
   ): it => {
-    text(size: 20pt, it)
+    text(size: 17pt, it)
     v(.75em)
   }
   
@@ -76,7 +83,7 @@
   body
 }
 
-#let start-numbering(body) = {
+#let main-content(body) = {
   set heading(numbering: "1.1", supplement: "Chapter")
 
   show heading.where(level: 1): it => {
@@ -110,20 +117,6 @@
 
   set page(numbering: "1")
   counter(page).update(1)
-
-  body
-}
-
-#let page-content(body) = {
-  // from here, add a new page before each level one heading
-  show heading.where(
-    level: 1
-  ): it => {
-    pagebreak()
-    it
-  }
-
-  show: start-numbering.with()
 
   body
 }
