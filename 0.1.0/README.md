@@ -12,5 +12,10 @@ the UGent fonts are not installed system-wide. This command will create the outp
 typst watch main.typ --font-path fonts
 ```
 
+## Dependencies
+
+- The library [acrostiche](https://typst.app/universe/package/acrostiche) is used to manage acronyms.
+    These are maintained under `src/acronyms.typ`.
+
 ## License
 This template is licensed under the GPL-3.0 license. See the LICENSE file for more information.
