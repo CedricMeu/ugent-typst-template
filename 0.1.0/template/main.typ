@@ -1,29 +1,28 @@
-#import "@local/ugent-thesis:0.1.0": thesis, acronyms, front-page, page-content
+#import "@local/ugent-thesis:0.1.0": thesis, acronyms, page-content, todo
 
 #show: thesis.with(
   title: [A UGent Master's Dissertation Created Using Typst],
   authors: ("John Doe",),
-  supervisors: ("Prof. Dr. Jane Doe",),
-  year: "2023-2024",
-  bibliography: bibliography("bib.bib")
-)
-
-#front-page(
-  faculty-img: image("images/ea.png"),
-  ugent-logo: image("images/ugent.png"),
 )
 
 #acronyms(
   acros: (
+    // define your acronyms here
     "ML": "Machine Learning",
     "AI": "Artificial Intelligence",
   )
 )
 
-#show: page-content
-// start the actual thesis contents here!
+= List of figures etc.
+#lorem(200)
+
+#show: page-content.with()
+
+// start your actual thesis contents here!
 
 = Introduction
-#lorem(200) 
+#todo[Write this thesis]
+#lorem(2000) 
 
-= Next Sections... 
+= Continue
+#lorem(200)

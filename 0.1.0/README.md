@@ -12,6 +12,10 @@ the UGent fonts are not installed system-wide. This command will create the outp
 typst watch main.typ --font-path fonts
 ```
 
+## Features
+- styling of headings and page numbering, etc.
+- `#todo[your todo note]`: a to-do note that is displayed as a colored block in the output.
+
 ## Dependencies
 
 - The library [acrostiche](https://typst.app/universe/package/acrostiche) is used to manage acronyms.

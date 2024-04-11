@@ -2,22 +2,18 @@
 #import "lib/research-questions.typ": init-rqs
 #import "lib/utils.typ": current-academic-year
 
-// store in states such that these need to be passed
-// only once, in the `thesis` function
-#let _authors = state("authors", none)
-#let _title = state("title", none)
-#let _supervisors = state("supervisors", none)
-#let _year = state("year", [#current-academic-year()])
+#let _todo-col = rgb("#ff5a08")
+#let _idea-col = rgb("#2b8a70")
 
 #let thesis(
   // The title of this thesis [content]
   title: none,
-  // the authors of this thesis
+  // the authors of this thesis [array of strings]
   authors: none,
-  // The supervisors for this thesis
-  supervisors: none,
-  // the academic year
-  year: none,
+  // the font that's used for the thesis [string]
+  font: "UGent Panno Text",
+  // optionally align pagebreaks to odd pages [bool]
+  odd_pagebreaks: false,
   // the actual content of the thesis
   body
 ) = {
@@ -30,17 +26,12 @@
     author: authors,
   )
 
-  // set states to the given parameters
-  _authors.update(authors)
-  _title.update(title)
-  _supervisors.update(supervisors)
-  if year != none {
-    _year.update(year)
-  }
-
+  show par: set block(spacing: 20pt)
+  set par(leading: 12pt, justify: true)
   set page(
+    margin: (left: 2.5cm, right: 2.5cm, top: 2.5cm, bottom: 2.5cm),  
     paper: "a4",
-    margin: 2cm,
+    numbering: "I",
     header: context {
       let elems = query(
         selector(heading).before(here()))
@@ -56,17 +47,8 @@
         align(right, emph(body))
       }
     },
-    numbering: "I"
   )
   
-  set heading(numbering: "1.", supplement: [Chapter])
-  
-  show heading.where(
-    level: 1
-  ): it => {
-    text(size: 30pt, it)
-    v(1.5em)
-  }
   
   show heading.where(
     level: 2
@@ -82,10 +64,52 @@
     v(.75em)
   }
   
-  set text(font: "UGent Panno Text", size: 12pt)
+  set text(font: font)
+  // don't break up words in justified text
+  set text(hyphenate: false)
   
   // make new sections appear on the right hand side
-  set pagebreak(weak: true, to: "odd")
+  if odd_pagebreaks {
+    set pagebreak(weak: true, to: "odd")
+  }
+
+  body
+}
+
+#let start-numbering(body) = {
+  set heading(numbering: "1.1", supplement: "Chapter")
+
+  show heading.where(level: 1): it => {
+    pagebreak(weak: true)
+    context {
+      let number = [#counter(heading).get().at(0)]
+
+      let nb = [#text(size: 60pt, weight: 300, number)]
+      let title = [
+        #text(size: 30pt, weight: 400, it.body)
+        #v(8pt)
+      ]
+
+      v(100pt)
+      grid(
+        rows: (50pt,),
+        columns: (1fr, 5fr),
+        grid.cell(
+          align: left + bottom,
+          [#nb],
+        ),
+        grid.cell(
+          align: right + bottom,
+          stroke: (bottom: 1pt),
+          [#title]
+        )
+      )
+      v(40pt)
+    }
+  }
+
+  set page(numbering: "1")
+  counter(page).update(1)
 
   body
 }
@@ -99,10 +123,44 @@
     it
   }
 
-  counter(page).update(1)
-  set page(numbering: "1")
+  show: start-numbering.with()
 
   body
+}
+
+// whether to show text black or white based on background colour
+#let bw-text(colour) = {
+  if oklab(colour).components().at(0) > 70% {
+    black
+  } else {
+    white
+  }
+}
+
+#let coloured-block(colour: rgb("#2b8a70"), title: [title], body) = {
+  block(
+    width: 100%,
+    radius: 4pt,
+    fill: colour,
+    inset: 6pt,
+    stroke: 2pt + colour.lighten(50%),
+    {
+      [#h(1fr) #text(size: 20pt, weight: 500, fill: white, title)]
+      v(-14pt)
+      set align(center)
+      set text(fill: bw-text(colour), weight: 500)
+      set par(leading: 9pt)
+      body
+    }
+  )
+}
+
+#let todo(body) = {
+  coloured-block(colour: _todo-col, title: [TODO], body)
+}
+
+#let idea(body) = {
+  coloured-block(colour: _idea-col, title: [IDEA], body)
 }
 
 #let acronyms(
