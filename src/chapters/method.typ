@@ -1,3 +1,0 @@
-= Method
-
-#lorem(100)

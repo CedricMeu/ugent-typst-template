@@ -1,0 +1,15 @@
+[package]
+name = "ugent-thesis"
+version = "0.1.0"
+entrypoint = "lib.typ"
+authors = ["Cedric Meukens <@CedricMeu>", "Miel Peeters <@mielpeeters>"]
+license = "GPL-3.0"
+compiler = "0.11.0"
+description = "A template for a UGent thesis dissertation."
+categories = ["thesis", "paper"]
+exclude = ["test.typ"]
+
+[template]
+path = "template"
+entrypoint = "main.typ"
+thumbnail = "thumbnail.png"

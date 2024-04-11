@@ -1,10 +1,10 @@
 #let rqs_state = state("rqs", none)
 
-#let init_rqs(rqs) = {
+#let init-rqs(rqs) = {
   rqs_state.update(rqs)
 }
 
-#let outline_rqs() = {
+#let outline-rqs() = {
   set enum(numbering: (..nums) => "RQ" + nums.pos().map(str).join(".") + ":", full: true)
   rqs_state.display(rqs => {
     for key in rqs.keys() {
@@ -13,14 +13,14 @@
   })
 }
 
-#let ref_rq(key) = {
+#let ref-rq(key) = {
   rqs_state.display(rqs => {
     let pos = rqs.keys().position(v => v == key) + 1
     [RQ#pos]
   })
 }
 
-#let cite_rq(key) = {
+#let cite-rq(key) = {
   rqs_state.display(rqs => {
     rqs.at(key)
   })
