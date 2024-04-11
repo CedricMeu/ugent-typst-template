@@ -14,7 +14,6 @@ typst watch main.typ --font-path fonts
 
 ## Features
 - styling of headings and page numbering, etc.
-- `#todo[your todo note]`: a to-do note that is displayed as a colored block in the output.
 
 ## Dependencies
 

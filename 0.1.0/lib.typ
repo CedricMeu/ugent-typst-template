@@ -2,9 +2,6 @@
 #import "lib/research-questions.typ": init-rqs
 #import "lib/utils.typ": current-academic-year
 
-#let _todo-col = rgb("#ff5a08")
-#let _idea-col = rgb("#2b8a70")
-
 #let thesis(
   // The title of this thesis [content]
   title: none,
@@ -128,32 +125,6 @@
   } else {
     white
   }
-}
-
-#let coloured-block(colour: rgb("#2b8a70"), title: [title], body) = {
-  block(
-    width: 100%,
-    radius: 4pt,
-    fill: colour,
-    inset: 6pt,
-    stroke: 2pt + colour.lighten(50%),
-    {
-      [#h(1fr) #text(size: 20pt, weight: 500, fill: white, title)]
-      v(-14pt)
-      set align(center)
-      set text(fill: bw-text(colour), weight: 500)
-      set par(leading: 9pt)
-      body
-    }
-  )
-}
-
-#let todo(body) = {
-  coloured-block(colour: _todo-col, title: [TODO], body)
-}
-
-#let idea(body) = {
-  coloured-block(colour: _idea-col, title: [IDEA], body)
 }
 
 #let acronyms(
