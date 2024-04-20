@@ -10,8 +10,6 @@
   // the font that's used for the thesis [string]
   font: "UGent Panno Text",
   // optionally align pagebreaks to odd pages [bool]
-  odd_pagebreaks: false,
-  // the actual content of the thesis
   body
 ) = {
   // title, authors are required (return clear error message if not given)
@@ -22,6 +20,9 @@
     title: title, 
     author: authors,
   )
+  
+  // make new sections appear on the right hand side
+  set pagebreak(weak: true, to: "odd")
 
   show par: set block(spacing: 20pt)
   set par(leading: 12pt, justify: true)
@@ -71,46 +72,12 @@
   set text(font: font)
   // don't break up words in justified text
   set text(hyphenate: false)
-  
-  // make new sections appear on the right hand side
-  if odd_pagebreaks {
-    set pagebreak(weak: true, to: "odd")
-  }
 
   body
 }
 
 #let main-content(body) = {
   set heading(numbering: "1.1", supplement: "Chapter")
-
-  show heading.where(level: 1): it => {
-    pagebreak(weak: true)
-    context {
-      let number = [#counter(heading).get().at(0)]
-
-      let nb = [#text(size: 60pt, weight: 300, number)]
-      let title = [
-        #text(size: 30pt, weight: 400, it.body)
-        #v(8pt)
-      ]
-
-      v(100pt)
-      grid(
-        rows: (50pt,),
-        columns: (1fr, 5fr),
-        grid.cell(
-          align: left + bottom,
-          [#nb],
-        ),
-        grid.cell(
-          align: right + bottom,
-          stroke: (bottom: 1pt),
-          [#title]
-        )
-      )
-      v(40pt)
-    }
-  }
 
   set page(numbering: "1")
   counter(page).update(1)
