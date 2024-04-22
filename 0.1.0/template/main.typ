@@ -1,4 +1,4 @@
-#import "@local/ugent-thesis:0.1.0": thesis, acronyms, page-content, todo
+#import "@local/ugent-thesis:0.1.0": thesis, acronyms, main-content, todo
 
 #show: thesis.with(
   title: [A UGent Master's Dissertation Created Using Typst],
@@ -16,12 +16,12 @@
 = List of figures etc.
 #lorem(200)
 
-#show: page-content.with()
+#show: main-content.with()
 
 // start your actual thesis contents here!
 
 = Introduction
-#todo[Write this thesis]
+#todo[Write your introduction]
 #lorem(2000) 
 
 = Continue

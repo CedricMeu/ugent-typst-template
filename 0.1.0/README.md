@@ -14,6 +14,7 @@ typst watch main.typ --font-path fonts
 
 ## Features
 - styling of headings and page numbering, etc.
+- `#todo[your todo note]` feature for showing inline todos in the output
 
 ## Dependencies
 
